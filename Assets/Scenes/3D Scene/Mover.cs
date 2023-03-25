@@ -7,7 +7,7 @@ class Mover : MonoBehaviour
 
     [SerializeField] Transform cameraTransform;
     [SerializeField] Rigidbody rb;
-
+    [SerializeField] Animator animator;
 
     void Update()
     {
@@ -29,11 +29,15 @@ class Mover : MonoBehaviour
 
         t.position = pos;
 
+        bool isMoving = direction != Vector3.zero;
+
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             t.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angularSpeed * Time.fixedDeltaTime);
         }
+
+        animator.SetBool("IsWalking", isMoving);
     }
 
     Vector3 GetInputDirction()
